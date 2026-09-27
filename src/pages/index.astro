@@ -1,0 +1,68 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import MailingListSignup from '../components/MailingListSignup.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<section class="poster">
+				<h1 class="poster-title">
+					VOYAGE
+					<span>Happening In An Egg</span>
+				</h1>
+				<div class="poster-box">
+					<p>A forthcoming book from Pearl Carter<br />from Switchback Books.</p>
+				</div>
+			</section>
+
+			<MailingListSignup />
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.poster {
+		padding: 2em 0 1em;
+	}
+	.poster-title {
+		margin: 0 0 0.4em;
+		font-weight: 700;
+		font-size: clamp(3rem, 13vw, 7rem);
+		line-height: 0.9;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
+	}
+	.poster-title span {
+		display: block;
+		font-size: clamp(1.1rem, 3.2vw, 1.9rem);
+		letter-spacing: 0.01em;
+		margin-top: 0.3em;
+	}
+	.poster-box {
+		border: 3px solid rgb(var(--black));
+		padding: 1.5em;
+		margin-top: 1.5em;
+	}
+	.poster-box p {
+		margin: 0;
+		font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+		font-size: 0.95em;
+		letter-spacing: 0.02em;
+		line-height: 1.6;
+	}
+	@media (max-width: 480px) {
+		.poster-box {
+			padding: 1.25em;
+		}
+	}
+</style>

@@ -1,0 +1,93 @@
+<section id="signup" class="signup">
+	<h2>Get notified when the book comes out</h2>
+	<p>Join the mailing list for updates on <em>Voyage Happening in an Egg</em> and other new work.</p>
+	<form id="signup-form">
+		<input
+			type="email"
+			name="email"
+			placeholder="you@example.com"
+			aria-label="Email address"
+			required
+		/>
+		<button type="submit">Sign up</button>
+	</form>
+	<p id="signup-message" role="status"></p>
+</section>
+
+<style>
+	.signup {
+		text-align: center;
+		padding: 2em 1.5em;
+		margin-top: 2em;
+		border: 3px solid rgb(var(--black));
+	}
+	form {
+		display: flex;
+		gap: 0.5em;
+		justify-content: center;
+		flex-wrap: wrap;
+		margin-top: 1.5em;
+	}
+	input[type='email'] {
+		padding: 0.6em 0.8em;
+		border: 2px solid rgb(var(--black));
+		border-radius: 0;
+		min-width: 260px;
+		font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+	}
+	button {
+		padding: 0.6em 1.2em;
+		border: 2px solid rgb(var(--black));
+		border-radius: 0;
+		background: var(--accent);
+		color: white;
+		font-size: 1em;
+		cursor: pointer;
+	}
+	button:hover {
+		background: white;
+		color: rgb(var(--black));
+	}
+	button:disabled {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+	#signup-message {
+		min-height: 1.5em;
+		margin: 1em 0 0;
+	}
+</style>
+
+<script>
+	const form = document.getElementById('signup-form') as HTMLFormElement;
+	const message = document.getElementById('signup-message') as HTMLParagraphElement;
+
+	form.addEventListener('submit', async (event) => {
+		event.preventDefault();
+		const email = (new FormData(form).get('email') as string) ?? '';
+		const button = form.querySelector('button') as HTMLButtonElement;
+
+		button.disabled = true;
+		message.textContent = '';
+
+		try {
+			const response = await fetch('/api/subscribe', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ email }),
+			});
+			const data: { error?: string } = await response.json();
+
+			if (response.ok) {
+				message.textContent = "Thanks! Check your inbox to confirm.";
+				form.reset();
+			} else {
+				message.textContent = data.error ?? 'Something went wrong. Please try again.';
+			}
+		} catch {
+			message.textContent = 'Something went wrong. Please try again.';
+		} finally {
+			button.disabled = false;
+		}
+	});
+</script>
