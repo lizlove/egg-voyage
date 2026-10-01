@@ -5,7 +5,7 @@ export const prerender = false;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const POST: APIRoute = async ({ request, locals }) => {
-	const body = await request.json().catch(() => null);
+	const body = await request.json<{ email?: unknown }>().catch(() => null);
 	const email = typeof body?.email === 'string' ? body.email.trim() : '';
 
 	if (!EMAIL_PATTERN.test(email)) {
