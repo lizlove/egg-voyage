@@ -22,3 +22,6 @@ npx wrangler secret put KIT_API_KEY
 npx wrangler secret put KIT_FORM_ID
 npm run deploy
 ```
+
+## TODO
+latebloomer flowershop domain name
